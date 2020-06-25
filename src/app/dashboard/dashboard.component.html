@@ -1,0 +1,10 @@
+<div class="dashboard-main container-fluid d-flex p-0 m-0">
+  <div class="dashboard-side d-md-flex col-md-2 flex-column pl-0 pr-0" [ngClass]="{'nav_show': env.showNav === true}">
+    <!-- Side Menu Logo -->
+    <app-side-menu></app-side-menu>
+  </div>
+  <div class="dashboard-body col-12 col-md-10 m-0 p-0">
+    <app-nav></app-nav>
+    <app-dashboard-home></app-dashboard-home>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="topnav_margin">
+  <div class="table_header p-2">
+    <span class="font-weight-bold">Home</span>
+  </div>
+  <div class="d-flex flex-column mt-3">
+    <div class="row col-md-12 m-0 p-0">
+
+      <div class="col-sm-4">
+        <div class="card card-grad-1">
+          <div class="card-body">
+            <div class="card-img"><i class="fa fa-user"></i> </div>
+            <h5 class="card-title">Registered Users</h5>
+            <p class="card-text"></p>
+            <div class="text-right card-value">{{registeredCustomers}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4 mt-2 mt-md-0">
+        <div class="card card-grad-2">
+          <div class="card-body">
+            <div class="card-img"><i class="fa fa-users"></i> </div>
+            <h5 class="card-title">Registered Agents</h5>
+            <p class="card-text"></p>
+            <div class="text-right card-value">{{registeredAgents}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4 mt-2 mt-md-0">
+        <div class="card card-grad-3">
+          <div class="card-body">
+            <div class="card-img"><i class="fa fa-money-bill"></i> </div>
+            <h5 class="card-title">Withdrawal Requests</h5>
+            <p class="card-text"></p>
+            <div class="text-right card-value">{{unreadWitdraw}}</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="container-fluid mt-3">
+      <div class="container-fluid p-2 font-weight-bold">Transactions Today</div>
+      <div class="d-table table">
+
+        <div class="d-none d-md-table-row table-head">
+          <div class="d-table-cell tth">#</div>
+          <div class="d-table-cell tth">Transactions</div>
+          <div class="d-table-cell tth">Amount</div>
+          <div class="d-table-cell tth">Type</div>
+          <div class="d-table-cell tth">Reference ID</div>
+        </div>
+
+        <ng-container *ngIf="todaysTransaction.length !== 0">
+        <div class="d-flex flex-wrap d-md-table-row table-row" *ngFor="let data of todaysTransaction">
+          <div class="d-none d-md-table-cell ttr">1</div>
+          <div class="d-block col-6 font-weight-bold col-md-auto d-md-table-cell ttr">{{data.user.firstName}} {{data.user.lastName}}</div>
+          <div class="d-block col-6 col-md-auto text-right text-md-left d-md-table-cell ttr">&#x20A6;{{data.amount}}</div>
+          <div class="d-table-cell col-6 mt-3 mt-md-0 col-md-auto ttr">{{data.transactionType}}</div>
+          <div class="d-table-cell col-6 mt-3 mt-md-0 col-md-auto text-right text-md-left ttr">{{data.referenceId}}</div>
+        </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</div>

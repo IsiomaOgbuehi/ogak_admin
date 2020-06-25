@@ -1,0 +1,62 @@
+<div class="dashboard-main container-fluid d-flex p-0 m-0">
+  <div class="dashboard-side d-md-flex col-md-2 flex-column pl-0 pr-0" [ngClass]="{'nav_show': env.showNav === true}">
+    <!-- Side Menu Logo -->
+    <app-side-menu></app-side-menu>
+  </div>
+  <div class="dashboard-body col-12 col-md-10 m-0 p-0">
+    <app-nav></app-nav>
+    <div class="topnav_margin">
+      <div class="table_header p-2">
+        <span class="font-weight-bold">Support Requests</span>
+      </div>
+      <div class="container col-12 p-0">
+        <nav class="navbar navbar-expand">
+          <!--<ul class="search_ul navbar-nav mx-auto">-->
+            <!--<li class="nav-item">-->
+              <!--<div class="form-group mb-0">-->
+                <!--<i class="fa fa-search search-icon"></i>-->
+                <!--<input class="form-control search_input" type="date" placeholder="Name or Phone" aria-label="Search" name="search">-->
+                <!--&lt;!&ndash; [(ngModel)]="searchText" (keyup)="searchUser(searchText)" &ndash;&gt;-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</ul>-->
+        </nav>
+
+        <div class="accordion" id="accordionParent">
+          <!--<div class="d-table table">-->
+
+            <ng-container *ngIf="apiData.length !== 0">
+              <div class="card support_card mt-2" *ngFor="let data of apiData | paginate: config" data-toggle="collapse" [attr.data-target]="'#collapse' + apiData.indexOf(data)" aria-expanded="true" [attr.aria-controls]="'collapse' + apiData.indexOf(data)" (click)="read(data.id, data.readStatus)">
+                <div class="card-header m-0 p-0 d-flex justify-content-between" [attr.id]="'heading' + apiData.indexOf(data)">
+                  <h5 class="m-0 p-0">
+                    <span class="btn btn-link text-dark" type="button">
+                      {{data.username}}
+                    </span>
+                  </h5>
+                  <div class="bg-success text-white support_indicator p-1 mr-3" [ngClass]="{'bg-danger': !data.readStatus}"><span class="d-none" [ngClass]="{'d-block': !data.readStatus}">UR</span>  <span class="d-none" [ngClass]="{'d-block': data.readStatus}">RD</span> </div>
+                </div>
+
+                <div [attr.id]="'collapse' + apiData.indexOf(data)" class="collapse" [attr.aria-labelledby]="'heading' + apiData.indexOf(data)" data-parent="#accordionParent">
+                  <div class="card-body" style="font-size: .9rem;">
+                    <div class="">
+                      <div>Email: <span class="font-weight-bold">{{data.email}}</span></div>
+                      <div>Phone: <span class="font-weight-bold">{{data.phone}}</span></div>
+                      <span class="font-weight-bold">Message:</span> {{data.message}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+          <!--</div>-->
+
+      </div>
+
+        <div class="container" [ngClass]="{'d-none': this.collection.data.length < 10}">
+          <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

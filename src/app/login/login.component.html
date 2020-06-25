@@ -1,0 +1,39 @@
+<div class="login_main d-flex flex-column justify-content-between">
+  <div class="text-center p-4">
+    <img src="../../assets/img/logo-trans.svg" class="login_logo" alt="Logo" />
+  </div>
+  <div class="text-center flex-grow-1 p-5">
+    <div class="col-md-6 col-lg-4 col-sm-8 p-4 mx-auto login_form">
+      <div class="text-center pt-5">
+        <h5>Admin</h5>
+      </div>
+      <form class="pt-5" name="form" [formGroup]="form">
+        <div class="form-group text-left">
+          <label for="username">Email address</label>
+          <input type="email" class="form-control" name="email" formControlName="email" [ngClass]="{'is-invalid': form.get('email').touched && form.get('email').invalid}" id="username" aria-describedby="usernameHelp">
+          <div class="invalid-feedback" *ngIf="form.get('email').touched && form.get('email').invalid">
+            <div *ngIf="form.get('email').errors.required">Email is required</div>
+            <div *ngIf="form.get('email').errors.email">Email must be valid</div>
+          </div>
+        </div>
+        <div class="form-group text-left">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" formControlName="password" [ngClass]="{'is-invalid': form.get('password').touched && form.get('password').invalid}">
+          <div class="invalid-feedback">
+            <div>Password is required</div>
+          </div>
+        </div>
+        <button type="submit" [disabled]="!form.valid" (click)="login()" class="btn btn-outline-light mt-3">
+          <span *ngIf="showLoader" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{btnValue}}
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="text-center p-4 login_footer">
+    <span>Developed by <a href="ulrea.com.ng" target="_blank"> Ulrea Nigeria Limited</a></span>
+  </div>
+  <div>
+
+  </div>
+</div>

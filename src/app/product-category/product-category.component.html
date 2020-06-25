@@ -1,0 +1,70 @@
+<div class="dashboard-main container-fluid d-flex p-0 m-0">
+  <div class="dashboard-side d-md-flex col-md-2 flex-column pl-0 pr-0" [ngClass]="{'nav_show': env.showNav === true}">
+    <!-- Side Menu Logo -->
+    <app-side-menu></app-side-menu>
+  </div>
+  <div class="dashboard-body col-12 col-md-10 m-0 p-0">
+    <app-nav></app-nav>
+    <div class="topnav_margin">
+      <div class="table_header p-2">
+        <span class="font-weight-bold">Product Categories</span>
+      </div>
+      <div class="d-flex flex-column mt-0">
+
+        <div class="container-fluid p-0 d-flex flex-column flex-md-row justify-content-around justify-content-md-between">
+          <!-- Table -->
+          <div class="d-table table col-12 col-md-6">
+            <div class="d-none d-md-table-row table-head">
+              <div class="d-table-cell tth">#</div>
+              <div class="d-table-cell tth">Category Name</div>
+              <div class="d-table-cell tth">Status</div>
+            </div>
+            <ng-container *ngIf="apiData.length !== 0">
+              <div class="d-flex mt-2 mt-md-0 flex-wrap d-md-table-row table-row" *ngFor="let data of apiData" (click)="updateValue(data)">
+                <div class="d-none d-md-table-cell ttr">{{apiData.indexOf(data) + 1}}</div>
+                <div class="d-block col-6 font-weight-bold col-md-auto d-md-table-cell ttr">{{data.categoryName}}</div>
+                <div class="d-block col-6 font-weight-bold col-md-auto d-md-table-cell ttr">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" name="old" id="{{apiData.indexOf(data)}}" [attr.checked]="data.categoryStatus ? true : null" disabled>
+                    <label class="custom-control-label" for="{{apiData.indexOf(data)}}"></label>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="form-row user_form col-12 col-md-4 mt-2 d-flex flex-row flex-md-column justify-content-around justify-content-md-start">
+            <h6>Add/Edit Category</h6>
+            <form [formGroup]="formGroup">
+            <div class="form-group">
+              <input type="text" id="category" class="form-control" name="category" formControlName="categoryName" [ngClass]="{'is-invalid': formGroup.get('categoryName').invalid && formGroup.get('categoryName').touched}" placeholder="Category" (keyup)="resetEdit()" />
+              <div class="invalid-feedback">
+                Category is required
+              </div>
+            </div>
+
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" name="new" id="customSwitch" formControlName="categoryStatus" [ngClass]="{'is-invalid': formGroup.get('categoryStatus').invalid && formGroup.get('categoryStatus').touched}" (change)="switchValue($event)" />
+              <label class="custom-control-label" for="customSwitch"></label>
+            </div>
+
+            <div class="form-group">
+              <button class="btn btn-primary rounded-pill mt-3" [disabled]="!formGroup.valid" *ngIf="!edit" (click)="addCategory()">
+                <span *ngIf="showLoader" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span *ngIf="!showLoader"> Add <i class="fa fa-plus-circle"></i></span>
+              </button>
+
+              <button class="btn btn-secondary rounded-pill mt-3" [disabled]="!formGroup.valid" *ngIf="edit" (click)="updateCategory()">
+                <span *ngIf="showLoader" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span *ngIf="!showLoader"> Edit <i class="fa fa-plus-circle"></i></span>
+              </button>
+            </div>
+            </form>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="dashboard-main container-fluid d-flex p-0 m-0">
+  <div class="dashboard-side d-md-flex col-md-2 flex-column pl-0 pr-0" [ngClass]="{'nav_show': env.showNav === true}">
+    <!-- Side Menu Logo -->
+    <app-side-menu></app-side-menu>
+  </div>
+  <div class="dashboard-body col-12 col-md-10 m-0 p-0">
+    <app-nav></app-nav>
+    <div class="topnav_margin">
+      <div class="table_header p-2">
+        <span class="font-weight-bold">Settings</span>
+      </div>
+
+      <div class="container mt-3">
+        <div class="mx-auto col-12" style="color: darkgray;"><h5>Change Settings for App Users</h5></div>
+        <div class="col-12 col-md-6 mt-3">
+          <form class="settingsForm user_form" [formGroup]="formGroup">
+
+            <div class="form-group p-2 pl-0">
+              <label for="savingsPercentage"> Savings Percentage (to qualify for borrowing)</label>
+              <input type="number" class="form-control" id="savingsPercentage" formControlName="savingsPercentage" [ngClass]="{'is-invalid': formGroup.get('savingsPercentage').touched && formGroup.get('savingsPercentage').invalid}" placeholder="Savings Percentage">
+              <div class="invalid-feedback"> Savings percentage is required </div>
+            </div>
+
+            <div class="form-group mt-3 p-2 pl-0">
+              <label for="minimumLoanAmount">Min Loan Amount (least amount to request for loan)</label>
+              <input type="number" class="form-control" id="minimumLoanAmount" formControlName="minimumLoanAmount" [ngClass]="{'is-invalid': formGroup.get('minimumLoanAmount').touched && formGroup.get('minimumLoanAmount').invalid}" placeholder="Minimum Loan">
+              <div class="invalid-feedback"> Savings percentage is required </div>
+            </div>
+
+            <div class="form-group mt-3 p-2 pl-0">
+              <label for="initialUserMaxAmount">New User Loan Amount (max amount to request for loan by new user)</label>
+              <input type="number" class="form-control" id="initialUserMaxAmount" formControlName="initialUserMaxAmount" [ngClass]="{'is-invalid': formGroup.get('initialUserMaxAmount').touched && formGroup.get('initialUserMaxAmount').invalid}" placeholder="New User Max Loan">
+              <div class="invalid-feedback"> New User Loan Amt is required </div>
+            </div>
+
+            <div class="form-group mt-3 p-2 pl-0">
+              <label for="maximumLoanAmount">Max Loan Amount (max amount to request for loan)</label>
+              <input type="number" class="form-control" id="maximumLoanAmount" formControlName="maximumLoanAmount" [ngClass]="{'is-invalid': formGroup.get('maximumLoanAmount').touched && formGroup.get('maximumLoanAmount').invalid}" placeholder="Max Loan">
+              <div class="invalid-feedback"> Max Loan Amt is required </div>
+            </div>
+
+            <div class="form-group mt-3 p-2 pl-0">
+              <label for="loanDefaultAmount">Loan Default Penalty (Charged amt for defaulted loans)</label>
+              <input type="number" class="form-control" id="loanDefaultAmount" formControlName="loanDefaultAmount" [ngClass]="{'is-invalid': formGroup.get('loanDefaultAmount').touched && formGroup.get('loanDefaultAmount').invalid}" placeholder="Defaulted Loan Amt">
+              <div class="invalid-feedback"> Loan Default is required </div>
+            </div>
+
+            <div class="form-group mt-3 p-2 pl-0 text-center">
+            <button type="submit" class="btn btn-outline-primary container rounded-pill mx-auto" (click)="updateSettings()" [disabled]="!formGroup.valid">
+              <span *ngIf="showButton">Update</span>
+              <span *ngIf="!showButton" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

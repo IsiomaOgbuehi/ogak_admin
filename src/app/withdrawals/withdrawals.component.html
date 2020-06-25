@@ -1,0 +1,100 @@
+<div class="dashboard-main container-fluid d-flex p-0 m-0">
+  <div class="dashboard-side d-md-flex col-md-2 flex-column pl-0 pr-0" [ngClass]="{'nav_show': env.showNav === true}">
+    <!-- Side Menu Logo -->
+    <app-side-menu></app-side-menu>
+  </div>
+  <div class="dashboard-body col-12 col-md-10 m-0 p-0">
+    <app-nav></app-nav>
+    <div class="topnav_margin">
+      <div class="table_header p-2">
+        <span class="font-weight-bold">Withdrawals Request</span>
+      </div>
+      <div class="d-flex flex-column mt-0">
+
+        <div class="container-fluid p-0">
+
+          <nav class="navbar navbar-expand">
+            <ul class="search_ul navbar-nav mx-auto">
+              <li class="nav-item">
+                <div class="form-group mb-0">
+                  <i class="fa fa-search search-icon"></i>
+                  <input class="form-control search_input" type="date" placeholder="Email Address" aria-label="Search" name="search" [(ngModel)]="searchText" (change)="searchTransaction(searchText)">
+                </div>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Table -->
+          <div class="d-table table">
+
+            <div class="d-none d-md-table-row table-head">
+              <div class="d-table-cell tth">#</div>
+              <div class="d-table-cell tth">Email</div>
+              <div class="d-table-cell tth font-weight-bold">Amount</div>
+              <div class="d-table-cell tth">Account Number</div>
+              <div class="d-table-cell tth">Account Name</div>
+              <div class="d-table-cell tth">Bank</div>
+              <div class="d-table-cell tth">Date Applied</div>
+              <div class="d-table-cell tth"></div>
+            </div>
+
+            <ng-container *ngIf="apiData.length !== 0">
+              <div class="d-flex mt-2 mt-md-0 flex-wrap d-md-table-row table-row" *ngFor="let data of apiData | paginate: config" (click)="getSelectedUser(data)" data-toggle="modal" data-target="#userForm" [ngClass]="{'active-row': id === apiData.indexOf(data)}" (click)="activeSelect(apiData.indexOf(data))">
+                <div class="d-none d-md-table-cell ttr">{{apiData.indexOf(data) + 1}}</div>
+                <div class="d-block col-6 font-weight-bold col-md-auto d-md-table-cell ttr">{{data.user.email}}</div>
+                <div class="d-block col-6 col-md-auto text-left text-md-left d-md-table-cell ttr">&#x20A6;{{data.amount}}</div>
+                <div class="d-none d-md-table-cell mt-3 mt-md-0 col-md-auto ttr">{{data.accountNumber}}</div>
+                <div class="d-block d-table-cell col-6 mt-3 mt-md-0 col-md-auto text-left text-md-left ttr">{{data.accountName}}</div>
+                <div class="d-table-cell col-6 mt-3 mt-md-0 col-md-auto ttr">{{data.bankName}}</div>
+                <div class="d-table-cell col-6 mt-3 mt-md-0 col-md-auto ttr">{{data.dateApplied}}</div>
+                <div class="d-table-cell col-6 mt-3 mt-md-0 col-md-auto ttr">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" name="approved" id="{{apiData.indexOf(data)}}" [attr.checked]="data.read ? true : null" disabled>
+                    <label class="custom-control-label" for="{{apiData.indexOf(data)}}"></label>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+
+          <!-- Spinner -->
+          <div class="container-fluid text-center mt-3" *ngIf="apiData.length === 0">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+
+          <div class="container" [ngClass]="{'d-none': this.collection.data.length < 10}">
+            <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="userForm" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="userForm" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Approve Withdrawal</h5>
+        <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <button type="submit" class="btn btn-outline-primary rounded-pill container" (click)="approve()">
+          <span *ngIf="showLoader" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span *ngIf="!showLoader">Approve</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger rounded-pill" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
